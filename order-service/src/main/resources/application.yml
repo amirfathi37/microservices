@@ -22,3 +22,42 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
+#Actuator
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+#Resilience4j
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventory:
+        ##for seeing state of circuit breaker(open/close/half open)
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        sliding-window-type: count_based
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: PT5S
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+  #Resilience4J timeout properties
+  #  timelimiter:
+  #    instances:
+  #      inventory:
+  #        timeout-duration:  PT3S
+
+  #Resilience4J retry properties
+#  retry:
+#    instances:
+#      inventory:
+#        max-attempts: 3
+#        wait-duration: PT5S
