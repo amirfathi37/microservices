@@ -23,7 +23,7 @@ public class ProductService {
         ProductMapper mapper = Mappers.getMapper(ProductMapper.class);
         Product product = mapper.productRequest2Product(productRequest);
         Product saved = productRepo.save(product);
-        log.info("has been saved product with id : {}", product.getId());
+        log.info("has been saved product with id : {}", saved.getId());
     }
 
     public List<ProductRequest> getAllProducts() {
