@@ -18,11 +18,24 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   application:
     name: order-service
-#  sleuth:
-#    sampler:
-#      probability:1.0
-#  zipkin:
-#    base-url: http://localhost:9411
+  #  sleuth:
+  #    sampler:
+  #      probability:1.0
+  #  zipkin:
+  #    base-url: http://localhost:9411
+
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    template:
+      default-topic: notificationTopic
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        json:
+          type:
+            mapping:
+              event:com.example.orderservice.dto.OrderPlaceEvent
 eureka:
   client:
     serviceUrl:
